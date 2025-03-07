@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="edu.farmingdale.demo.HelloController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.demo.HelloController">
+   <children>
+      <Label fx:id="welcomeText" alignment="TOP_CENTER" layoutX="189.0" layoutY="23.0" prefHeight="17.0" prefWidth="239.0" text="Card Game - 24" />
+      <Button fx:id="refreshButton" layoutX="55.0" layoutY="251.0" mnemonicParsing="false" onAction="#refreshImage" prefHeight="25.0" prefWidth="73.0" text="Refresh" />
+      <ImageView fx:id="firstView" fitHeight="150.0" fitWidth="150.0" layoutX="8.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="secondView" fitHeight="150.0" fitWidth="150.0" layoutX="158.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="thirdView" fitHeight="150.0" fitWidth="150.0" layoutX="308.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="fourthView" fitHeight="150.0" fitWidth="150.0" layoutX="458.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
+      <TextField fx:id="textField" layoutX="144.0" layoutY="251.0" prefHeight="25.0" prefWidth="248.0" promptText="Try an operation" />
+      <Button fx:id="verifyButton" layoutX="411.0" layoutY="251.0" mnemonicParsing="false" onAction="#onHelloButtonClick" text="Verify" />
+      <Label fx:id="answerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="47.0" prefHeight="17.0" prefWidth="315.0" textOverrun="CENTER_WORD_ELLIPSIS" />
+   </children>
+</AnchorPane>
