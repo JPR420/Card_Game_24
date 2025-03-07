@@ -1,6 +1,7 @@
 package edu.farmingdale.demo;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,11 +17,9 @@ import java.util.Random;
 
 public class HelloController {
     @FXML
-    private Label welcomeText;
+    private Label welcomeText, answerLabel , hintLabel;
     @FXML
-    private Label answerLabel;
-    @FXML
-    private Button refreshButton, verifyButton;
+    private Button refreshButton, verifyButton, hintButton;
     @FXML
     private TextField textField;
     @FXML
@@ -67,6 +66,12 @@ public class HelloController {
         secondView.setImage(cardImageViews[index2][suit2]);
         thirdView.setImage(cardImageViews[index3][suit3]);
         fourthView.setImage(cardImageViews[index4][suit4]);
+        Image shuffleImage = new Image("C:\\Users\\JPR\\IdeaProjects\\demo\\src\\main\\resources\\edu\\farmingdale\\demo\\shuffle.png");
+        ImageView shuffleImageView = new ImageView(shuffleImage);
+        shuffleImageView.setFitHeight(16);
+        shuffleImageView.setFitWidth(30);
+        refreshButton.setGraphic(shuffleImageView);
+
     }
     @FXML
     protected void onHelloButtonClick() {
@@ -74,17 +79,22 @@ public class HelloController {
         if (isValidExpression(expression)) {
             try {
                 double result = evaluateExpression(expression);
-
                 if (result == 24) {
                     answerLabel.setText("Correct! The expression evaluates to 24.");
                 }else{
-                    answerLabel.setText("The expression does not evaluates to 24. Try again.");
+                    answerLabel.setText("The expression does not evaluates to 24." +
+                            " Hint: PEMDAS rule");
                 }
 
-            } catch (Exception e) {
+            }catch (NullPointerException e){
+                answerLabel.setText("Please enter an Input");
+            }
+            catch (Exception e) {
                 answerLabel.setText("Error evaluating expression.");
                 System.out.println(e);
             }
+        }else {
+            answerLabel.setText("Only use the numbers from the Cards");
         }
     }
     @FXML
@@ -108,16 +118,27 @@ public class HelloController {
         answerLabel.setText("");
 
     }
-    private boolean isValidExpression(String expression) {
+    @FXML
+    protected void getHint() {
+        try {
+            String inputforAI = generateHintPrompt();
+            String hint = OpenAI.getTextResponse(inputforAI);
+            System.out.println(hint);
+            hintLabel.setText("Hint: " + hint);
+        }catch (Exception e){
+            System.out.println(e);
 
-        int firstRank,secondRank,thirdRank,fourthRank;
+        }
+
+    }
+
+    private boolean isValidExpression(String expression) {
         String first,second,third,fourth;
         first = Integer.toString(index1+1);
         second = Integer.toString(index2+1);
         third = Integer.toString(index3+1);
         fourth = Integer.toString(index4+1);
-        String expresions = "^[0-9\\+\\-\\*/\\(\\)\\s]+$";
-        //split text field
+        String expresions = String.format("^(%s|%s|%s|%s|\\+|\\-|\\*|\\/|\\(|\\)|\\s)*$",first, second, third, fourth);
         return expression.matches(expresions);
     }
     private double evaluateExpression(String expression) throws ScriptException {
@@ -126,5 +147,11 @@ public class HelloController {
         Object result = engine.eval(expression);
         return ((Number) result).doubleValue();
     }
+    private String generateHintPrompt() {
+        String cardInfo = String.format("You have the numbers: %s, %s, %s, %s ",
+                ranks[index1], ranks[index2], ranks[index3], ranks[index4]);
 
+        return cardInfo + "Generate an arithmetic expression using the numbers provided before. The expression should follow the PEMDAS order of operations (Parentheses, Exponents, Multiplication, Division, Addition, Subtraction). The goal is for the final result to equal 24. Each number should only be used once, and the operations should be a combination of multiplication, division, addition, subtraction, or exponentiation, strictly adhering to the correct order of operations. The output should be just the numbers and the operators, not a detailed explanation of the logic or steps. Ensure the expression is solvable and results in exactly 24 when evaluated. Do not repeat any number. The model should verify that the solution is correct multiple times and only output a valid expression. The model should focus on accuracy and correctness, ensuring the final answer is precisely 24. Avoid approximations or partial solutions. Do not provide any explanation, just the arithmetic expression formatted in terms of numbers and operators that equals 24. Example (based on previous requests): Numbers: 7,9,4,11 Expected output: (7*(9-4)) - 11 which equals 24 or (11 * (7-4)) - 9 or with the numbers 9,3,12,8 the answer looked like this (12 - 8) * (9 - 3) which also ends up being 24, Important: Only provide the arithmetic expression in the correct order (PEMDAS). The output must evaluate to 24 when the operations are applied in sequence. Avoid overcomplicating the expression unnecessarily—keep it simple and efficient. Please make sure the output is verified and results in exactly 24 when following PEMDAS rules. Only give me the expression." ;
+
+    }
 }
