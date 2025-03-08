@@ -69,11 +69,6 @@ public class HelloController {
         secondView.setImage(cardImageViews[index2][suit2]);
         thirdView.setImage(cardImageViews[index3][suit3]);
         fourthView.setImage(cardImageViews[index4][suit4]);
-        Image shuffleImage = new Image("C:\\Users\\JPR\\IdeaProjects\\demo\\src\\main\\resources\\edu\\farmingdale\\demo\\shuffle.png");
-        ImageView shuffleImageView = new ImageView(shuffleImage);
-        shuffleImageView.setFitHeight(16);
-        shuffleImageView.setFitWidth(30);
-        refreshButton.setGraphic(shuffleImageView);
 
     }
 

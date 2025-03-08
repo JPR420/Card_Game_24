@@ -9,7 +9,7 @@
 <AnchorPane prefHeight="328.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.demo.HelloController">
    <children>
       <Label fx:id="welcomeText" alignment="TOP_CENTER" layoutX="189.0" layoutY="14.0" prefHeight="17.0" prefWidth="239.0" text="Card Game - 24" />
-      <Button fx:id="refreshButton" layoutX="83.0" layoutY="251.0" mnemonicParsing="false" onAction="#refreshImage" prefHeight="25.0" prefWidth="39.0" />
+      <Button fx:id="refreshButton" layoutX="83.0" layoutY="251.0" mnemonicParsing="false" onAction="#refreshImage" prefHeight="25.0" prefWidth="65.0" text="Refresh" />
       <ImageView fx:id="firstView" fitHeight="150.0" fitWidth="150.0" layoutX="8.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="secondView" fitHeight="150.0" fitWidth="150.0" layoutX="158.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="thirdView" fitHeight="150.0" fitWidth="150.0" layoutX="308.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
