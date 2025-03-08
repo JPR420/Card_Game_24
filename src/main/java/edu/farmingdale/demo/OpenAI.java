@@ -9,13 +9,23 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Utility class to interact with OpenAI's API.
+ */
 public class OpenAI {
     private static final String API_KEY = System.getenv("APIKEY");
 
+    /**
+     * Sends a prompt to the OpenAI API and retrieves a text response.
+     *
+     * @param prompt The text prompt to send to the model.
+     * @return The response text from the model.
+     * @throws Exception If there is an error with the API request.
+     */
     public static String getTextResponse(String prompt) throws Exception {
         HttpClient client = HttpClient.newHttpClient();
         JSONObject body = new JSONObject();
-        body.put("model","gpt-4");  // Ensure you are using the correct model
+        body.put("model","gpt-4");
         body.put("messages", new JSONArray()
                 .put(new JSONObject().put("role", "system").put("content", "You are a helpful assistant."))
                 .put(new JSONObject().put("role", "user").put("content", prompt))
@@ -33,13 +43,12 @@ public class OpenAI {
 
         JSONObject responseBody = new JSONObject(response.body());
 
-        // Checking if the response contains the "choices" field
         if (responseBody.has("choices")) {
             String text = responseBody.getJSONArray("choices")
                     .getJSONObject(0)
                     .getJSONObject("message")
                     .getString("content");
-            return text.trim();  // Returning only the content from the first choice
+            return text.trim();
         } else {
             throw new JSONException("Response does not contain 'choices' field");
         }

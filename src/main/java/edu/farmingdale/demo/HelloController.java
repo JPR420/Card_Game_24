@@ -1,7 +1,6 @@
 package edu.farmingdale.demo;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,10 +10,11 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.File;
-import java.util.Objects;
 import java.util.Random;
-
-
+/**
+ * Controller class for handling the logic behind the card game.
+ * The user will try to create a mathematical expression that evaluates to 24 using four random cards.
+ */
 public class HelloController {
     @FXML
     private Label welcomeText, answerLabel , hintLabel;
@@ -42,6 +42,9 @@ public class HelloController {
     String[] ranks = {"1","2", "3", "4", "5", "6", "7", "8", "9", "10","11", "12", "13"};
     String[] suits = {"clubs","diamonds" , "hearts","spades" };
 
+    /**
+     * Initializes the view by loading the card images and setting random card images for the four slots.
+     */
     @FXML
     void initialize() {
         String folderPath = "src/main/resources/edu/farmingdale/demo/img";
@@ -73,6 +76,10 @@ public class HelloController {
         refreshButton.setGraphic(shuffleImageView);
 
     }
+
+    /**
+     * Verifies the user's input expression and checks if it evaluates to 24.
+     */
     @FXML
     protected void onHelloButtonClick() {
         String expression = textField.getText();
@@ -97,6 +104,10 @@ public class HelloController {
             answerLabel.setText("Only use the numbers from the Cards");
         }
     }
+
+    /**
+     * Refreshes the card images and clears the input field.
+     */
     @FXML
     protected void refreshImage() {
         index1 = random.nextInt(13);
@@ -118,6 +129,10 @@ public class HelloController {
         answerLabel.setText("");
 
     }
+
+    /**
+     * Fetches a hint for the user from the OpenAI API.
+     */
     @FXML
     protected void getHint() {
         try {
@@ -131,6 +146,8 @@ public class HelloController {
         }
 
     }
+
+    // Helper methods for validation, expression evaluation, and hint generation below
 
     private boolean isValidExpression(String expression) {
         String first,second,third,fourth;
